@@ -13,12 +13,13 @@ namespace CosmosDBSamplesV2
         [FunctionName("CreateQueueForWrite")]
         public static async 
             Task<HttpResponseMessage> Run([HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)]HttpRequestMessage req, 
-            [Queue("todoqueueforwrite")] IAsyncCollector<ToDoItem> toDoItemLookUps,
+            [Queue("todoqueueforwrite")] IAsyncCollector<string> toDoItemLookUps,
             TraceWriter log)
         {
             log.Info("C# HTTP trigger function processed a request.");
 
-            await toDoItemLookUps.AddAsync(new ToDoItem { Id = Guid.NewGuid().ToString(), Description="This row inserted by output binding." });
+            //await toDoItemLookUps.AddAsync(new ToDoItem { Id = Guid.NewGuid().ToString(), Description="This row inserted by output binding." });
+            await toDoItemLookUps.AddAsync("This row inserted by WriteDocFromString");
 
             return req.CreateResponse(HttpStatusCode.OK);
         }

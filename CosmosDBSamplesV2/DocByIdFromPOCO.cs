@@ -8,7 +8,9 @@ namespace CosmosDBSamplesV2
         [FunctionName("DocByIdFromPOCO")]
         public static void Run(
             [QueueTrigger("todoqueueforlookup")] ToDoItemLookup toDoItemLookup,
-            [CosmosDB("ToDoItems", "Items", 
+            [CosmosDB(
+                databaseName: "ToDoItems",
+                collectionName: "Items",
                 ConnectionStringSetting = "CosmosDBConnection", 
                 Id = "{ToDoItemId}")]ToDoItem toDoItem,
             TraceWriter log)

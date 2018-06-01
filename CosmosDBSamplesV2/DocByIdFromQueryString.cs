@@ -10,13 +10,17 @@ namespace CosmosDBSamplesV2
     {
         [FunctionName("DocByIdFromQueryString")]
         public static HttpResponseMessage Run(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)]HttpRequestMessage req,
-            [CosmosDB("ToDoItems", "Items", 
+            [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)]
+                HttpRequestMessage req,
+            [CosmosDB(
+                databaseName: "ToDoItems",
+                collectionName: "Items",
                 ConnectionStringSetting = "CosmosDBConnection", 
                 Id = "{Query.id}")] ToDoItem toDoItem,
             TraceWriter log)
         {
             log.Info("C# HTTP trigger function processed a request.");
+
             if (toDoItem == null)
             {
                 log.Info($"ToDo item not found");

@@ -11,7 +11,9 @@ namespace CosmosDBSamplesV2
     {
         [FunctionName("CreateQueueForLookup")]
         public static async 
-            Task<HttpResponseMessage> Run([HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)]HttpRequestMessage req, 
+            Task<HttpResponseMessage> Run(
+            [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)]
+                HttpRequestMessage req, 
             [Queue("todoqueueforlookup")] IAsyncCollector<ToDoItemLookup> toDoItemLookUps,
             TraceWriter log)
         {

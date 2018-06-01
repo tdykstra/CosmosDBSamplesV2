@@ -16,8 +16,11 @@ namespace CosmosDBSamplesV2
     {
         [FunctionName("DocsByUsingDocumentClient")]
         public static async Task<HttpResponseMessage> Run(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)]HttpRequestMessage req,
-            [CosmosDB("ToDoItems", "Items", 
+            [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", 
+                Route = null)]HttpRequestMessage req,
+            [CosmosDB(
+                databaseName: "ToDoItems",
+                collectionName: "Items",
                 ConnectionStringSetting = "CosmosDBConnection")] DocumentClient client,
             TraceWriter log)
         {

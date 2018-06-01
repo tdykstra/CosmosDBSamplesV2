@@ -15,10 +15,12 @@ namespace CosmosDBSamplesV2
                 Route = "todoitems2/{id}")]HttpRequestMessage req,
             [CosmosDB("ToDoItems", "Items", 
                 ConnectionStringSetting = "CosmosDBConnection", 
-                SqlQuery = "select * from ToDoItems r where r.id = {id}")] IEnumerable<ToDoItem> toDoItems,
+                SqlQuery = "select * from ToDoItems r where r.id = {id}")]
+                IEnumerable<ToDoItem> toDoItems,
             TraceWriter log)
         {
             log.Info("C# HTTP trigger function processed a request.");
+
             foreach (ToDoItem toDoItem in toDoItems)
             {
                 log.Info(toDoItem.Description);
