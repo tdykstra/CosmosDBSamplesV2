@@ -8,6 +8,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace CosmosDBSamplesV2
 {
@@ -18,11 +19,10 @@ namespace CosmosDBSamplesV2
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)]HttpRequestMessage req,
             [CosmosDB("ToDoItems", "Items", 
                 ConnectionStringSetting = "CosmosDBConnection")] DocumentClient client,
-            string searchterm,
             TraceWriter log)
         {
             log.Info("C# HTTP trigger function processed a request.");
-
+            var searchterm = req.RequestUri.ParseQueryString().Get("searchterm");
             Uri collectionUri = UriFactory.CreateDocumentCollectionUri("ToDoItems", "Items");
 
             if (string.IsNullOrWhiteSpace(searchterm))
