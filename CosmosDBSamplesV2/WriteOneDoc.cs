@@ -4,9 +4,9 @@ using System;
 
 namespace CosmosDBSamplesV1
 {
-    public static class WriteDocFromString
+    public static class WriteOneDoc
     {
-        [FunctionName("WriteDocFromString")]
+        [FunctionName("WriteOneDoc")]
         public static void Run(
             [QueueTrigger("todoqueueforwrite")] string queueMessage,
             [CosmosDB(
