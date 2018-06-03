@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Azure.WebJobs.Host;
@@ -10,9 +12,9 @@ namespace CosmosDBSamplesV2
     public static class DocsBySqlQuery
     {
         [FunctionName("DocsBySqlQuery")]
-        public static HttpResponseMessage Run(
+        public static IActionResult Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)]
-                HttpRequestMessage req,
+                HttpRequest req,
             [CosmosDB(
                 databaseName: "ToDoItems",
                 collectionName: "Items",
@@ -26,7 +28,7 @@ namespace CosmosDBSamplesV2
             {
                 log.Info(toDoItem.Description);
             }
-            return req.CreateResponse(HttpStatusCode.OK);
+            return new OkResult();
         }
     }
 }

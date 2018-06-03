@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.Documents.Client;
 using Microsoft.Azure.Documents.Linq;
 using Microsoft.Azure.WebJobs;
@@ -14,9 +16,9 @@ namespace CosmosDBSamplesV2
     public static class DocsByUsingDocumentClient
     {
         [FunctionName("DocsByUsingDocumentClient")]
-        public static async Task<HttpResponseMessage> Run(
+        public static async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", 
-                Route = null)]HttpRequestMessage req,
+                Route = null)]HttpRequest req,
             [CosmosDB(
                 databaseName: "ToDoItems",
                 collectionName: "Items",
@@ -25,10 +27,10 @@ namespace CosmosDBSamplesV2
         {
             log.Info("C# HTTP trigger function processed a request.");
 
-            var searchterm = req.RequestUri.ParseQueryString().Get("searchterm");
+            var searchterm = req.Query["searchterm"];
             if (string.IsNullOrWhiteSpace(searchterm))
             {
-                return req.CreateResponse(HttpStatusCode.NotFound);
+                return (ActionResult)new NotFoundResult();
             }
 
             Uri collectionUri = UriFactory.CreateDocumentCollectionUri("ToDoItems", "Items");
@@ -46,7 +48,7 @@ namespace CosmosDBSamplesV2
                     log.Info(result.Description);
                 }
             }
-            return req.CreateResponse(HttpStatusCode.OK);
+            return new OkResult();
         }
     }
 }
