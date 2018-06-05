@@ -3,9 +3,9 @@ using Microsoft.Azure.WebJobs.Host;
 
 namespace CosmosDBSamplesV2
 {
-    public static class DocByIdFromPOCO
+    public static class DocByIdFromJSON
     {
-        [FunctionName("DocByIdFromPOCO")]
+        [FunctionName("DocByIdFromJSON")]
         public static void Run(
             [QueueTrigger("todoqueueforlookup")] ToDoItemLookup toDoItemLookup,
             [CosmosDB(
